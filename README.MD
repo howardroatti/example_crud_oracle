@@ -64,7 +64,7 @@ Para executar, bastar inserir o comando a seguir, o resto é intuitivo:
     * [utils](src/utils/): Nesse diretório encontram-se scripts de [configuração](src/utils/config.py) e automatização da [tela de informações iniciais](src/utils/splash_screen.py)
 
 ### Bibliotecas Utilizadas
-- [requirements.txt](src/requirements.txt)
+- [requirements.txt](src/requirements.txt): `pip install -r requirements.txt`
 
 ### Instalando Oracle InstantClient
 - Baixe a versão do InstantClient de acordo com a versão do Banco de Dados
