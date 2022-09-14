@@ -9,6 +9,7 @@
 #                  (2) https://cx-oracle.readthedocs.io/en/latest/user_guide/plsql_execution.html
 #                  (3) https://cx-oracle.readthedocs.io/en/latest/index.html
 ###########################################################################
+import json
 import cx_Oracle
 from pandas import DataFrame
 
@@ -71,7 +72,7 @@ class OracleQueries:
         rows = self.cur.fetchall()
         return DataFrame(rows, columns=[col[0].lower() for col in self.cur.description])
 
-    def sqToMatrix(self, query:str):
+    def sqlToMatrix(self, query:str):
         '''
         Esse método irá executar uma query
         Parameters:
@@ -84,7 +85,18 @@ class OracleQueries:
         columns = [col[0].lower() for col in self.cur.description]
         return matrix, columns
 
-    
+    def sqlToJson(self, query:str):
+        '''
+        Esse método irá executar uma query
+        Parameters:
+        - query: consulta utilizada para recuperação dos dados
+        return: uma objeto json
+        '''
+        self.cur.execute(query)
+        columns = [col[0].lower() for col in self.cur.description]
+        self.cur.rowfactory = lambda *args: dict(zip(columns, args))
+        rows = self.cur.fetchall()
+        return json.dumps(rows, default=str)
 
     def write(self, query:str):
         if not self.can_write:
