@@ -1,11 +1,16 @@
 from conexion.oracle_queries import OracleQueries
 
-oracle = OracleQueries(write=True)
+oracle = OracleQueries(can_write=True)
 oracle.connect()
-result = oracle.sqToMatrix("select * from dual")
+result = oracle.sqlToMatrix("select * from dual")
 print(result)
 
 print()
 
 result = oracle.sqlToDataFrame("select * from dual")
+print(result)
+
+print()
+
+result = oracle.sqlToJson("select * from dual")
 print(result)
