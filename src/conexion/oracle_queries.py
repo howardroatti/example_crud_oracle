@@ -90,7 +90,7 @@ class OracleQueries:
         Esse método irá executar uma query
         Parameters:
         - query: consulta utilizada para recuperação dos dados
-        return: uma objeto json
+        return: um objeto json
         '''
         self.cur.execute(query)
         columns = [col[0].lower() for col in self.cur.description]
