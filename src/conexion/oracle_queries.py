@@ -72,7 +72,7 @@ class OracleQueries:
         rows = self.cur.fetchall()
         return DataFrame(rows, columns=[col[0].lower() for col in self.cur.description])
 
-    def sqlToMatrix(self, query:str):
+    def sqlToMatrix(self, query:str) -> tuple:
         '''
         Esse método irá executar uma query
         Parameters:
@@ -108,3 +108,11 @@ class OracleQueries:
     def close(self):
         if self.cur:
             self.cur.close()
+
+    def executeDDL(self, query:str):
+        '''
+        Esse método irá executar o comando DDL enviado no atributo query
+        Parameters:
+        - query: consulta utilizada para comandos DDL
+        '''
+        self.cur.execute(query)
