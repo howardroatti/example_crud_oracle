@@ -57,6 +57,7 @@ Para executar, bastar inserir o comando a seguir, o resto é intuitivo:
                 print(f"O CPF {cpf} já está cadastrado.")
                 return None
         ```
+      - Outros exemplos: [test.py](src/test.py)
     * [controller](src/controller/): Nesse diretório encontram-sem as classes controladoras, responsáveis por realizar inserção, alteração e exclusão dos registros das tabelas.
     * [model](src/model/): Nesse diretório encontram-ser as classes das entidades descritas no [diagrama relacional](diagrams/DIAGRAMA_RELACIONAL_PEDIDOS.pdf)
     * [reports](src/reports/) Nesse diretório encontra-se a [classe](src/reports/relatorios.py) responsável por gerar todos os relatórios do sistema
