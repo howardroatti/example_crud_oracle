@@ -213,4 +213,5 @@ BEGIN
                                   
 END;
 
+/*Confirma(persiste) as alterações*/
 COMMIT;
