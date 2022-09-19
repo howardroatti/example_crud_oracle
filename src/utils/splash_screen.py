@@ -1,41 +1,56 @@
 from conexion.oracle_queries import OracleQueries
+from utils import config
 
 class SplashScreen:
 
     def __init__(self):
-        self.qry_total_produtos = "select count(1) as total_produtos from produtos"
-        self.qry_total_clientes = "select count(1) as total_clientes from clientes"
-        self.qry_total_fornecedores = "select count(1) as total_fornecedores from fornecedores"
-        self.qry_total_pedidos = "select count(1) as total_pedidos from pedidos"
-        self.qry_total_itens_pedido = "select count(1) as total_itens_pedido from itens_pedido"
+        # Consultas de contagem de registros - inicio
+        self.qry_total_produtos = config.QUERY_COUNT.format(tabela="produtos")
+        self.qry_total_clientes = config.QUERY_COUNT.format(tabela="clientes")
+        self.qry_total_fornecedores = config.QUERY_COUNT.format(tabela="fornecedores")
+        self.qry_total_pedidos = config.QUERY_COUNT.format(tabela="pedidos")
+        self.qry_total_itens_pedido = config.QUERY_COUNT.format(tabela="itens_pedido")
+        # Consultas de contagem de registros - fim
+
+        # Nome(s) do(s) criador(es)
         self.created_by = "Howard Roatti"
         self.professor = "Prof. M.Sc. Howard Roatti"
         self.disciplina = "Banco de Dados"
         self.semestre = "2022/2"
 
     def get_total_produtos(self):
+        # Cria uma nova conexão com o banco que permite alteração
         oracle = OracleQueries()
         oracle.connect()
+        # Retorna o total de registros computado pela query
         return oracle.sqlToDataFrame(self.qry_total_produtos)["total_produtos"].values[0]
 
     def get_total_clientes(self):
+        # Cria uma nova conexão com o banco que permite alteração
         oracle = OracleQueries()
         oracle.connect()
+        # Retorna o total de registros computado pela query
         return oracle.sqlToDataFrame(self.qry_total_clientes)["total_clientes"].values[0]
 
     def get_total_fornecedores(self):
+        # Cria uma nova conexão com o banco que permite alteração
         oracle = OracleQueries()
         oracle.connect()
+        # Retorna o total de registros computado pela query
         return oracle.sqlToDataFrame(self.qry_total_fornecedores)["total_fornecedores"].values[0]
 
     def get_total_pedidos(self):
+        # Cria uma nova conexão com o banco que permite alteração
         oracle = OracleQueries()
         oracle.connect()
+        # Retorna o total de registros computado pela query
         return oracle.sqlToDataFrame(self.qry_total_pedidos)["total_pedidos"].values[0]
 
     def get_total_itens_pedidos(self):
+        # Cria uma nova conexão com o banco que permite alteração
         oracle = OracleQueries()
         oracle.connect()
+        # Retorna o total de registros computado pela query
         return oracle.sqlToDataFrame(self.qry_total_itens_pedido)["total_itens_pedido"].values[0]
 
     def get_updated_screen(self):
