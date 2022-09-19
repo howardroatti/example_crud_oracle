@@ -2,6 +2,8 @@
 
 Para executar, bastar inserir o comando a seguir, o resto é intuitivo:
 ```shell
+~$ python test.py
+~$ python create_tables_and_records.py
 ~$ python principal.py
 ```
 
@@ -11,7 +13,7 @@ Para executar, bastar inserir o comando a seguir, o resto é intuitivo:
 - [sql](sql): Nesse diretório estão os scripts para criação das tabelas e inserção de alguns dados fictícios para testes do sistema
     * [create_tables_pedidos.sql](sql/create_tables_pedidos.sql): script responsável pela criação das tabelas e relacionamentos
     * [inserting_samples_records.sql](sql/inserting_samples_records.sql): script responsável pela inserção dos registros fictícios para testes do sistema.
-      - Obs.: Há alguns blocos PL/SQL que precisam ser executados um a um, a depender da ferramenta que estiver utilizando
+    * [inserting_samples_related_records.sql](sql/inserting_samples_related_records.sql): script responsável pela inserção dos registros fictícios para testes do sistema utilizando blocos PL/SQL.
 - [src](src): Nesse diretório estão os scripts do sistema
     * [conexion](src/conexion): Nesse repositório encontra-se o [módulo de conexão com o banco de dados Oracle](src/conexion/oracle_queries.py)
       - Exemplo de utilização para consultas simples:
@@ -63,6 +65,8 @@ Para executar, bastar inserir o comando a seguir, o resto é intuitivo:
     * [reports](src/reports/) Nesse diretório encontra-se a [classe](src/reports/relatorios.py) responsável por gerar todos os relatórios do sistema
     * [sql](src/sql/): Nesse diretório encontram-se os scripts utilizados para geração dos relatórios a partir da [classe relatorios](src/reports/relatorios.py)
     * [utils](src/utils/): Nesse diretório encontram-se scripts de [configuração](src/utils/config.py) e automatização da [tela de informações iniciais](src/utils/splash_screen.py)
+    * [create_tables_and_records.py](src/create_tables_and_records.py): Script responsável por criar as tabelas e registros fictícios. Esse script deve ser executado antes do script [principal.py](src/principal.py) para gerar as tabelas, caso não execute os scripts diretamente no SQL Developer ou em alguma outra IDE de acesso ao Banco de Dados.
+    * [principal.py](src/principal.py): Script responsável por ser a interface entre o usuário e os módulos de acesso ao Banco de Dados. Deve ser executado após a criação das tabelas.
 
 ### Bibliotecas Utilizadas
 - [requirements.txt](src/requirements.txt): `pip install -r requirements.txt`
