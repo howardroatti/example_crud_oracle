@@ -9,8 +9,11 @@ def create_tables(query:str):
     for command in list_of_commands:    
         if len(command) > 0:
             print(command)
-            oracle.executeDDL(command)
-            print("Successfully executed")
+            try:
+                oracle.executeDDL(command)
+                print("Successfully executed")
+            except Exception as e:
+                print(e)            
 
 def generate_records(query:str, sep:str=';'):
     list_of_commands = query.split(sep)
