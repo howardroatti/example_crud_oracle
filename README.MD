@@ -71,19 +71,19 @@ Para que possa testar as conexões com o banco de dados Oracle e o módulo Conex
         ```
       - Outros exemplos: [test.py](src/test.py)
       - Caso esteja utilizando na máquina virtual antiga, você precisará alterar o método connect de:
-      ```python
-      self.conn = cx_Oracle.connect(user=self.user,
-                              password=self.passwd,
-                              dsn=self.connectionString()
-                              )
-      ```
-      Para:
-      ```python
-      self.conn = cx_Oracle.connect(user=self.user,
-                              password=self.passwd,
-                              dsn=self.connectionString(in_container=True)
-                              )
-      ```
+          ```python
+          self.conn = cx_Oracle.connect(user=self.user,
+                                  password=self.passwd,
+                                  dsn=self.connectionString()
+                                  )
+          ```
+        Para:
+          ```python
+          self.conn = cx_Oracle.connect(user=self.user,
+                                  password=self.passwd,
+                                  dsn=self.connectionString(in_container=True)
+                                  )
+          ```
     * [controller](src/controller/): Nesse diretório encontram-sem as classes controladoras, responsáveis por realizar inserção, alteração e exclusão dos registros das tabelas.
     * [model](src/model/): Nesse diretório encontram-ser as classes das entidades descritas no [diagrama relacional](diagrams/DIAGRAMA_RELACIONAL_PEDIDOS.pdf)
     * [reports](src/reports/) Nesse diretório encontra-se a [classe](src/reports/relatorios.py) responsável por gerar todos os relatórios do sistema
@@ -111,12 +111,12 @@ Para que possa testar as conexões com o banco de dados Oracle e o módulo Conex
   sudo mv share instantclient_18_5/
   ```
 - Edite o arquivo `.bash_profile` incluindo as linhas a seguir ao final do arquivo:
-```shell
-export ORACLE_HOME=/usr/local/oracle/instantclient_18_5/lib/oracle/18.5/client64
-export LD_LIBRARY_PATH=$ORACLE_HOME/lib
-export PATH=$PATH:$ORACLE_HOME/bin
-export PATH
-```
+  ```shell
+  export ORACLE_HOME=/usr/local/oracle/instantclient_18_5/lib/oracle/18.5/client64
+  export LD_LIBRARY_PATH=$ORACLE_HOME/lib
+  export PATH=$PATH:$ORACLE_HOME/bin
+  export PATH
+  ```
 
 ## Contato
 - [LinkedIn](https://linkedin.com/in/howardroatti)
