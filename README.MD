@@ -1,21 +1,31 @@
 # Exemplo de Sistema em Python fazendo CRUD no Oracle
 
-Para executar, bastar inserir o comando a seguir, o resto é intuitivo:
+Esse sistema de exemplo é composto por um conjunto de tabelas que representam pedidos de vendas, contendo tabelas como: clientes, fornecedores, produtos, pedidos e itens de pedido.
+
+O sistema exige que as tabelas existam, então basta executar o script Python a seguir para criação das tabelas e preenchimento de dados de exemplos:
+```shell
+~$ python create_tables_and_records.py
+```
+
+Para executar o sistema basta executar o script Python a seguir:
+```shell
+~$ python principal.py
+```
+
+Para que possa testar as conexões com o banco de dados Oracle e o módulo Conexion desenvolvido para esse projeto, basta executar o script Python a seguir:
 ```shell
 ~$ python test.py
-~$ python create_tables_and_records.py
-~$ python principal.py
 ```
 
 ## Organização
 - [diagrams](diagrams): Nesse diretório está o [diagrama relacional](diagrams/DIAGRAMA_RELACIONAL_PEDIDOS.pdf) (lógico) do sistema.
     * O sistema possui cinco entidades: PRODUTOS, CLIENTES, FORNECEDORES, PEDIDOS e ITENS_PEDIDO
-- [sql](sql): Nesse diretório estão os scripts para criação das tabelas e inserção de alguns dados fictícios para testes do sistema
-    * [create_tables_pedidos.sql](sql/create_tables_pedidos.sql): script responsável pela criação das tabelas e relacionamentos
+- [sql](sql): Nesse diretório estão os scripts para criação das tabelas e inserção de dados fictícios para testes do sistema
+    * [create_tables_pedidos.sql](sql/create_tables_pedidos.sql): script responsável pela criação das tabelas, relacionamentos e criação de permissão no esquema LabDatabase.
     * [inserting_samples_records.sql](sql/inserting_samples_records.sql): script responsável pela inserção dos registros fictícios para testes do sistema.
-    * [inserting_samples_related_records.sql](sql/inserting_samples_related_records.sql): script responsável pela inserção dos registros fictícios para testes do sistema utilizando blocos PL/SQL.
+    * [inserting_samples_related_records.sql](sql/inserting_samples_related_records.sql): script responsável pela inserção dos registros fictícios de pedidos e itens de pedidos para testes do sistema utilizando blocos PL/SQL.
 - [src](src): Nesse diretório estão os scripts do sistema
-    * [conexion](src/conexion): Nesse repositório encontra-se o [módulo de conexão com o banco de dados Oracle](src/conexion/oracle_queries.py)
+    * [conexion](src/conexion): Nesse repositório encontra-se o [módulo de conexão com o banco de dados Oracle](src/conexion/oracle_queries.py). Esse módulo possui algumas funcionalidades úteis para execução de instruções DML e DDL, sendo possível obter JSON, Matriz e Pandas DataFrame.
       - Exemplo de utilização para consultas simples:
 
         ```python
@@ -60,6 +70,20 @@ Para executar, bastar inserir o comando a seguir, o resto é intuitivo:
                 return None
         ```
       - Outros exemplos: [test.py](src/test.py)
+      - Caso esteja utilizando na máquina virtual antiga, você precisará alterar o método connect de:
+      ```python
+      self.conn = cx_Oracle.connect(user=self.user,
+                              password=self.passwd,
+                              dsn=self.connectionString()
+                              )
+      ```
+      Para:
+      ```python
+      self.conn = cx_Oracle.connect(user=self.user,
+                              password=self.passwd,
+                              dsn=self.connectionString(in_container=True)
+                              )
+      ```
     * [controller](src/controller/): Nesse diretório encontram-sem as classes controladoras, responsáveis por realizar inserção, alteração e exclusão dos registros das tabelas.
     * [model](src/model/): Nesse diretório encontram-ser as classes das entidades descritas no [diagrama relacional](diagrams/DIAGRAMA_RELACIONAL_PEDIDOS.pdf)
     * [reports](src/reports/) Nesse diretório encontra-se a [classe](src/reports/relatorios.py) responsável por gerar todos os relatórios do sistema
@@ -72,32 +96,27 @@ Para executar, bastar inserir o comando a seguir, o resto é intuitivo:
 - [requirements.txt](src/requirements.txt): `pip install -r requirements.txt`
 
 ### Instalando Oracle InstantClient
-- Baixe a versão do InstantClient de acordo com a versão do Banco de Dados
-- Execute o comando a seguir, caso precise converter o arquivo .rpm para .deb
+- Baixe a versão do [InstantClient](https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html) de acordo com a versão do Banco de Dados
+- Caso esteja utilizando uma distribuição Linux baseado em Debian, será necessário executar o comando a seguir para converter o arquivo .rpm para .deb.
   ```shell
   sudo alien --scripts oracle-instantclient18.5-basic-18.5.0.0.0-3.x86_64.rpm
   ```
-- Descompacte o arquivo e será gerado um diretório
-- Mova o diretório para a localizaçõ correta:
-  ```shell
-  sudo mv instantclient_18_5 /usr/local/oracle/
-  ```
+- Descompacte o arquivo e será gerado um diretório em um diretório de fácil acesso.
 - Mova os diretórios lib e share para dentro do diretório do InstantClient
   ```shell
-  sudo mv lib instantclient_18_5/
+  sudo mv lib /usr/local/oracle/instantclient_18_5/
   ```
   
   ```shell
   sudo mv share instantclient_18_5/
   ```
-- Crie as seguintes variáveis de ambiente via terminal
-  ```shell
-  export ORACLE_HOME=/usr/local/oracle/instantclient_18_5
-  ```
-
-  ```shell
-  export ORACLE_HOME=/usr/local/oracle/instantclient_18_5/lib/oracle/18.5/client64/lib
-  ```
+- Edite o arquivo `.bash_profile` incluindo as linhas a seguir ao final do arquivo:
+```shell
+export ORACLE_HOME=/usr/local/oracle/instantclient_18_5/lib/oracle/18.5/client64
+export LD_LIBRARY_PATH=$ORACLE_HOME/lib
+export PATH=$PATH:$ORACLE_HOME/bin
+export PATH
+```
 
 ## Contato
 - [LinkedIn](https://linkedin.com/in/howardroatti)
