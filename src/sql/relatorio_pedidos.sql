@@ -16,4 +16,4 @@ select p.codigo_pedido
   on p.codigo_pedido = i.codigo_pedido
   left join produtos prd
   on i.codigo_produto = prd.codigo_produto
-  order by c.nome
+  order by c.nome, i.codigo_item_pedido
