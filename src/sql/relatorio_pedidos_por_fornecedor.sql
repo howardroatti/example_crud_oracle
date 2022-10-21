@@ -16,3 +16,4 @@ select nvl(f.nome_fantasia, f.razao_social) as empresa
   inner join itens_pedido i
   on p.codigo_pedido = i.codigo_pedido
   group by sp.qtd_pedidos, nvl(f.nome_fantasia, f.razao_social)
+  order by nvl(f.nome_fantasia, f.razao_social)
