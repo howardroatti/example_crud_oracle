@@ -96,6 +96,11 @@ Para que possa testar as conexões com o banco de dados Oracle e o módulo Conex
 ### Bibliotecas Utilizadas
 - [requirements.txt](src/requirements.txt): `pip install -r requirements.txt`
 
+### Em caso de problemas com a execução dos software dando a seguinte mensagem `ORA-28001: the password has expired`, execute as linhas de comando a seguir no Oracle:
+`ALTER PROFILE DEFAULT LIMIT PASSWORD_LIFE_TIME UNLIMITED;`
+`ALTER USER labdatabase IDENTIFIED BY "labDatabase2022";`
+`ALTER USER labdatabase IDENTIFIED BY  "labDatabase2022";`
+
 ### Instalando Oracle InstantClient
 - Baixe a versão do [InstantClient](https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html) de acordo com a versão do Banco de Dados
 - Caso esteja utilizando uma distribuição Linux baseado em Debian, será necessário executar o comando a seguir para converter o arquivo .rpm para .deb.
