@@ -9,6 +9,8 @@ class Relatorio:
         with open("sql/relatorio_usuarios.sql") as f:
             self.query_relatorio_usuarios = f.read()
 
+        with open("sql/relatorio_emprestimos.sql") as f:
+            self.query_relatorio_emprestimos = f.read()
 
 
         # # Abre o arquivo com a consulta e associa a um atributo da classe
@@ -49,6 +51,13 @@ class Relatorio:
         oracle.connect()
         # Recupera os dados transformando em um DataFrame
         print(oracle.sqlToDataFrame(self.query_relatorio_usuarios))
+
+    def get_relatorio_emprestimos(self):
+        # Cria uma nova conexão com o banco que permite alteração
+        oracle = OracleQueries()
+        oracle.connect()
+        # Recupera os dados transformando em um DataFrame
+        print(oracle.sqlToDataFrame(self.query_relatorio_emprestimos))
 
 
     # def get_relatorio_pedidos(self):

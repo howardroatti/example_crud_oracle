@@ -9,12 +9,14 @@ MENU_PRINCIPAL = """Menu Principal
 MENU_RELATORIOS = """Relatórios
 1 - Relatório de Livros
 2 - Relatório de Usuários
+3 - Relatório de Empréstimos
 0 - Sair
 """
 
 MENU_ENTIDADES = """Entidades
 1 - LIVROS
 2 - USUÁRIOS
+3 - EMPRÉSTIMOS
 """
 
 # Consulta de contagem de registros por tabela

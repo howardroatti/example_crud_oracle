@@ -35,7 +35,7 @@ class Controller_Usuario:
         # Persiste (confirma) as alterações
         oracle.conn.commit()
         # Recupera os dados da nova entidade criada transformando em um DataFrame
-        novo_usuario = self.get_usuario_from_dataframe(oracle, id_usuario)
+        novo_usuario = Controller_Usuario.get_usuario_from_dataframe(oracle, id_usuario)
         # Exibe os atributos do novo objeto
         print(novo_usuario.to_string())
         # Retorna o objeto para utilização posterior, caso necessário
@@ -50,7 +50,7 @@ class Controller_Usuario:
         id_usuario = int(input("Código do Usuário que irá alterar: "))        
 
         # Verifica se a entidade existe na base de dados
-        if not self.verifica_existencia_usuario(oracle, id_usuario):
+        if Controller_Usuario.verifica_existencia_usuario(oracle, id_usuario):
             print("Insira os novos dados do usuário a ser atualizado.\n")
             nome = input("Nome: ")
             email = input("Email: ")
@@ -60,7 +60,7 @@ class Controller_Usuario:
             oracle.write(f"update usuarios set nome = '{nome}', email = '{email}', telefone = '{telefone}' where id_usuario = {id_usuario}")
 
             # Cria um novo objeto atualizado
-            usuario_atualizado = self.get_usuario_from_dataframe(oracle, id_usuario)
+            usuario_atualizado = Controller_Usuario.get_usuario_from_dataframe(oracle, id_usuario)
 
             # Exibe os atributos do novo objeto
             print(usuario_atualizado.to_string())
@@ -80,9 +80,9 @@ class Controller_Usuario:
         id_usuario = int(input("Código do Usuário que irá excluir: "))        
 
         # Verifica se a entidade existe na base de dados
-        if not self.verifica_existencia_usuario(oracle, id_usuario):            
+        if Controller_Usuario.verifica_existencia_usuario(oracle, id_usuario):            
             # Recupera os dados da entidade e cria um novo objeto para informar que foi removido
-            usuario_excluido = self.get_usuario_from_dataframe(oracle, id_usuario)
+            usuario_excluido = Controller_Usuario.get_usuario_from_dataframe(oracle, id_usuario)
             # Revome da tabela
             oracle.write(f"delete from usuarios where id_usuario = {id_usuario}")
             # Exibe os atributos do objeto excluído
@@ -91,14 +91,23 @@ class Controller_Usuario:
         else:
             print(f"O código {id_usuario} não existe.")
 
-    def verifica_existencia_usuario(self, oracle:OracleQueries, id_usuario:int=None) -> bool:
+    @staticmethod
+    def verifica_existencia_usuario(oracle:OracleQueries, id_usuario:int=None) -> bool:
         # Recupera os dados da nova entidade criada transformando em um DataFrame
         df_usuario = oracle.sqlToDataFrame(f"select id_usuario, nome, email, telefone from usuarios where id_usuario = {id_usuario}")
-        return df_usuario.empty
+        return not df_usuario.empty
     
-    def get_usuario_from_dataframe(self, oracle:OracleQueries, id_usuario:int=None) -> Usuario:
+    @staticmethod
+    def get_usuario_from_dataframe(oracle:OracleQueries, id_usuario:int=None) -> Usuario:
         # Recupera os dados transformando em um DataFrame
         df_usuario = oracle.sqlToDataFrame(f"select id_usuario, nome, email, telefone from usuarios where id_usuario = {id_usuario}")
         # Cria novo objeto a partir do DataFrame
-        novo_usuario = Usuario(df_usuario.id_usuario.values[0], df_usuario.nome.values[0], df_usuario.email.values[0], df_usuario.telefone.values[0])
-        return novo_usuario
+        return Usuario(df_usuario.id_usuario.values[0], df_usuario.nome.values[0], df_usuario.email.values[0], df_usuario.telefone.values[0])
+    
+    @staticmethod
+    def valida_usuario(oracle:OracleQueries, codigo_usuario:int=None) -> Usuario:
+        if not Controller_Usuario.verifica_existencia_usuario(oracle, codigo_usuario):
+            print(f"O usuário de código {codigo_usuario} não existe na base.")
+            return None
+        else:
+            return Controller_Usuario.get_usuario_from_dataframe(oracle, codigo_usuario)
