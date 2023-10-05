@@ -97,14 +97,14 @@ class Controller_Emprestimo:
             # Revome da tabela
             oracle.write(f"delete from emprestimos where id_emprestimo = {id_emprestimo}")
             # Exibe os atributos do objeto excluído
-            print("Empréstimo Removido com Sucesso!")
+            print("Empréstimo removido com Sucesso!")
             print(emprestimo_excluido.to_string())
         else:
             print(f"O código de empréstimo {id_emprestimo} não existe.")
 
     def cadastrar_emprestimo(self, oracle) -> Emprestimo:
         #Solicita os dados de cadastro
-        print("Informe os dados solicitado para cadastrar o emptréstimo.\n")
+        print("Informe os dados solicitado para cadastrar o empréstimo.\n")
 
         # Lista os usuarios existentes para inserir no item de emprestimo
         self.relatorio.get_relatorio_usuarios()
@@ -140,3 +140,11 @@ class Controller_Emprestimo:
         livro = Controller_Livro.get_livro_from_dataframe(oracle, int(df_emprestimo.id_livro.values[0]))
         usuario = Controller_Usuario.get_usuario_from_dataframe(oracle, int(df_emprestimo.id_usuario.values[0]))
         return Emprestimo(int(df_emprestimo.id_emprestimo.values[0]), livro, usuario, df_emprestimo.data_emprestimo.values[0], df_emprestimo.data_devolucao_sugerida.values[0])
+    
+    @staticmethod
+    def valida_emprestimo(oracle:OracleQueries, codigo_emprestimo:int=None) -> Emprestimo:
+        if not Controller_Emprestimo.verifica_existencia_emprestimo(oracle, codigo_emprestimo):
+            print(f"O empréstimo de código {codigo_emprestimo} não existe na base.")
+            return None
+        else:
+            return Controller_Emprestimo.get_emprestimo_from_dataframe(oracle, codigo_emprestimo)

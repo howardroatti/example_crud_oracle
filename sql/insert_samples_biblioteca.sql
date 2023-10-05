@@ -23,8 +23,8 @@ INSERT INTO Emprestimos (       id_emprestimo,  id_livro,       id_usuario,     
 VALUES (EMPRESTIMOS_ID_EMPRESTIMO_SEQ.NEXTVAL,  2,              2,              TO_DATE('25/09/2023', 'DD/MM/YYYY'),    TO_DATE('10/10/2023', 'DD/MM/YYYY'));
 
 -- Inserindo valores iniciais na tabela "Devolucoes"
-INSERT INTO Devolucoes (id_devolucao, id_emprestimo, data_devolucao, multa)
-VALUES (1, 1, TO_DATE('14/10/2023', 'DD/MM/YYYY'), 0);
+INSERT INTO Devolucoes (id_devolucao, id_emprestimo, data_devolucao)
+VALUES (1, 1, TO_DATE('14/10/2023', 'DD/MM/YYYY'));
 
-INSERT INTO Devolucoes (id_devolucao, id_emprestimo, data_devolucao, multa)
-VALUES (2, 2, TO_DATE('09/10/2023', 'DD/MM/YYYY'), 0);
+INSERT INTO Devolucoes (id_devolucao, id_emprestimo, data_devolucao)
+VALUES (2, 2, TO_DATE('09/10/2023', 'DD/MM/YYYY'));

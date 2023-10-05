@@ -4,6 +4,7 @@ from reports.relatorios import Relatorio
 from controller.controller_livro import Controller_Livro
 from controller.controller_usuario import Controller_Usuario
 from controller.controller_emprestimo import Controller_Emprestimo
+from controller.controller_devolucao import Controller_Devolucao
 # from controller.controller_fornecedor import Controller_Fornecedor
 # from controller.controller_pedido import Controller_Pedido
 # from controller.controller_item_pedido import Controller_Item_Pedido
@@ -13,6 +14,7 @@ relatorio = Relatorio()
 ctrl_livro = Controller_Livro()
 ctrl_usuario = Controller_Usuario()
 ctrl_emprestimo = Controller_Emprestimo()
+ctrl_devolucao = Controller_Devolucao()
 # ctrl_fornecedor = Controller_Fornecedor()
 # ctrl_pedido = Controller_Pedido()
 # ctrl_item_pedido = Controller_Item_Pedido()
@@ -25,6 +27,8 @@ def reports(opcao_relatorio:int=0):
         relatorio.get_relatorio_usuarios()
     if opcao_relatorio == 3:
         relatorio.get_relatorio_emprestimos()
+    if opcao_relatorio == 4:
+        relatorio.get_relatorio_devolucoes()
 
     # elif opcao_relatorio == 2:
     #     relatorio.get_relatorio_pedidos()
@@ -47,6 +51,8 @@ def inserir(opcao_inserir:int=0):
         novo_cliente = ctrl_usuario.inserir_usuario()
     elif opcao_inserir == 3:
         novo_emprestimo = ctrl_emprestimo.inserir_emprestimo()
+    elif opcao_inserir == 4:
+        nova_devolucao = ctrl_devolucao.inserir_devolucao()
 
     # elif opcao_inserir == 3:
     #     novo_fornecedor = ctrl_fornecedor.inserir_fornecedor()
@@ -63,7 +69,10 @@ def atualizar(opcao_atualizar:int=0):
         usuario_atualizado = ctrl_usuario.atualizar_usuario()
     elif opcao_atualizar == 3:
         relatorio.get_relatorio_emprestimos()
-        usuario_atualizado = ctrl_emprestimo.atualizar_emprestimo()
+        emprestimo_atualizado = ctrl_emprestimo.atualizar_emprestimo()
+    elif opcao_atualizar == 4:
+        relatorio.get_relatorio_devolucoes()
+        devolucao_atualizada = ctrl_devolucao.atualizar_devolucao()
 
 
     # elif opcao_atualizar == 2:
@@ -90,6 +99,9 @@ def excluir(opcao_excluir:int=0):
     elif opcao_excluir == 3:
         relatorio.get_relatorio_emprestimos()
         ctrl_emprestimo.excluir_emprestimo()
+    elif opcao_excluir == 4:
+        relatorio.get_relatorio_devolucoes()
+        ctrl_devolucao.excluir_devolucao()
 
     # elif opcao_excluir == 2:                
     #     relatorio.get_relatorio_clientes()
@@ -116,7 +128,7 @@ def run():
         if opcao == 1: # Relatórios
             
             print(config.MENU_RELATORIOS)
-            opcao_relatorio = int(input("Escolha uma opção [0-6]: "))
+            opcao_relatorio = int(input("Escolha uma opção [0-4]: "))
             config.clear_console(1)
 
             reports(opcao_relatorio)
@@ -138,7 +150,7 @@ def run():
         elif opcao == 3: # Atualizar Registros
 
             print(config.MENU_ENTIDADES)
-            opcao_atualizar = int(input("Escolha uma opção [1-5]: "))
+            opcao_atualizar = int(input("Escolha uma opção [1-4]: "))
             config.clear_console(1)
 
             atualizar(opcao_atualizar=opcao_atualizar)
@@ -148,7 +160,7 @@ def run():
         elif opcao == 4:
 
             print(config.MENU_ENTIDADES)
-            opcao_excluir = int(input("Escolha uma opção [1-5]: "))
+            opcao_excluir = int(input("Escolha uma opção [1-4]: "))
             config.clear_console(1)
 
             excluir(opcao_excluir=opcao_excluir)

@@ -47,7 +47,7 @@ CREATE TABLE Devolucoes (
   id_devolucao NUMBER PRIMARY KEY,
   id_emprestimo NUMBER NOT NULL,
   data_devolucao DATE NOT NULL,
-  multa NUMBER(10, 2), --Nulo ou zero caso não haja multa
+  --multa NUMBER(10, 2), --Nulo ou zero caso não haja multa
   FOREIGN KEY (id_emprestimo) REFERENCES Emprestimos(id_emprestimo)
 );
 
