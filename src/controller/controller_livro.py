@@ -1,4 +1,5 @@
 from model.livro import Livro
+from reports.relatorios import Relatorio
 from conexion.oracle_queries import OracleQueries
 
 class Controller_Livro:
@@ -22,13 +23,17 @@ class Controller_Livro:
         ano_novo_livro = int(input("Ano de publicação (número): "))
         qtd_novo_livro = int(input("Quantidade (número): "))
 
+        while qtd_novo_livro < 1:
+            print(f"\n\nQuantidade inválida. Insira um valor maior ou igual a 1: ")
+            qtd_novo_livro = int(input("\nDigite a quantidade total desejada (número): "))
+
         # Cria um dicionário para mapear as variáveis de entrada e saída
         data = dict(codigo=output_value, titulo=titulo_novo_livro, autor=autor_novo_livro, ano=ano_novo_livro, qtd=qtd_novo_livro)
         # Executa o bloco PL/SQL anônimo para inserção do novo livro e recuperação da chave primária criada pela sequence
         cursor.execute("""
         begin
             :codigo := LIVROS_ID_LIVRO_SEQ.NEXTVAL;
-            insert into livros values(:codigo, :titulo, :autor, :ano, :qtd, :qtd);
+            insert into livros values(:codigo, :titulo, :autor, :ano, :qtd);
         end;
         """, data)
         # Recupera o código do novo livro
@@ -56,15 +61,20 @@ class Controller_Livro:
             return None
         #encerra antecipadamente cado o livro não exista
 
+        livro_atual = Controller_Livro.get_livro_from_dataframe(oracle, id_livro)
+
         print("Insira os novos dados do livro a ser atualizado.\n")
         titulo = input("Título: ")
         autor = input("Autor: ")
         ano = int(input("Ano de publicação (número): "))
-        qtd = int(input("Quantidade (número): "))
-        disponibilidade = int(input("Disponibilidade (número): "))
+        qtd = int(input("Quantidade total (número): "))
+
+        while qtd < livro_atual.get_quantidade():
+            print(f"Você não pode reduzir a quantidade total de {livro_atual.get_quantidade()}. Insira um valor maior ou igual: ")
+            qtd = int(input("Quantidade total (número): "))
 
         # Atualiza a descrição do livro existente
-        oracle.write(f"update livros set titulo = '{titulo}', autor = '{autor}', ano_publicacao = '{ano}', quantidade = '{qtd}', disponibilidade = '{disponibilidade}' where id_livro = {id_livro}")
+        oracle.write(f"update livros set titulo = '{titulo}', autor = '{autor}', ano_publicacao = '{ano}', quantidade = '{qtd}' where id_livro = {id_livro}")
 
         # Cria um novo objeto Livro
         livro_atualizado = Controller_Livro.get_livro_from_dataframe(oracle, id_livro)
@@ -98,15 +108,15 @@ class Controller_Livro:
     @staticmethod
     def verifica_existencia_livro(oracle:OracleQueries, id_livro:int=None) -> bool:
         # Recupera os dados da nova entidade criada transformando em um DataFrame
-        df_livro = oracle.sqlToDataFrame(f"select id_livro, titulo, autor, ano_publicacao, quantidade, disponibilidade from livros where id_livro = {id_livro}")
+        df_livro = oracle.sqlToDataFrame(f"select id_livro, titulo, autor, ano_publicacao, quantidade from livros where id_livro = {id_livro}")
         return not df_livro.empty
     
     @staticmethod
     def get_livro_from_dataframe(oracle:OracleQueries, id_livro:int=None) -> Livro:
         # Recupera os dados do novo livro criado transformando em um DataFrame
-        df_livro = oracle.sqlToDataFrame(f"select id_livro, titulo, autor, ano_publicacao, quantidade, disponibilidade from livros where id_livro = {id_livro}")
+        df_livro = oracle.sqlToDataFrame(f"select id_livro, titulo, autor, ano_publicacao, quantidade from livros where id_livro = {id_livro}")
         # Cria novo objeto a partir do DataFrame
-        return Livro(df_livro.id_livro.values[0], df_livro.titulo.values[0], df_livro.autor.values[0], df_livro.ano_publicacao.values[0], df_livro.quantidade.values[0], df_livro.disponibilidade.values[0])
+        return Livro(df_livro.id_livro.values[0], df_livro.titulo.values[0], df_livro.autor.values[0], df_livro.ano_publicacao.values[0], df_livro.quantidade.values[0])
     
     @staticmethod
     def valida_livro(oracle:OracleQueries, id_livro:int=None) -> Livro:
@@ -114,4 +124,18 @@ class Controller_Livro:
             print(f"O livro de código {id_livro} não existe na base.")
             return None
         else:
-            return Controller_Livro.get_livro_from_dataframe(oracle, id_livro)
+            return Controller_Livro.get_livro_from_dataframe(oracle, id_livro) 
+        
+    @staticmethod
+    def valida_livro_disponivel(oracle:OracleQueries, id_livro:int=None) -> Livro:
+        if not Controller_Livro.verifica_existencia_livro(oracle, id_livro):
+            print(f"O livro de código {id_livro} não existe na base.")
+            return None
+        
+        livros_disponiveis_df = oracle.sqlToDataFrame(Relatorio().query_relatorio_livros_disponiveis)
+
+        if not id_livro in livros_disponiveis_df.id_livro.values.tolist():
+            print(f"O livro de código {id_livro} não possui quantidade disponível.")
+            return None
+
+        return Controller_Livro.get_livro_from_dataframe(oracle, id_livro) 

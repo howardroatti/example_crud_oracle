@@ -19,8 +19,8 @@ CREATE TABLE Livros (
   titulo VARCHAR2(255) NOT NULL,
   autor VARCHAR2(255) NOT NULL,
   ano_publicacao NUMBER(4) NOT NULL,
-  quantidade NUMBER NOT NULL, --Unidades totais deste livro
-  disponibilidade NUMBER NOT NULL --Quantidade disponível para empréstimo
+  quantidade NUMBER NOT NULL --Unidades totais deste livro
+  --disponibilidade NUMBER NOT NULL --Quantidade disponível para empréstimo
 );
 
 -- Cria tabela "Usuários"

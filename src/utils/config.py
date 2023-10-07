@@ -24,7 +24,7 @@ MENU_ENTIDADES = """Entidades
 # Consulta de contagem de registros por tabela
 QUERY_COUNT = 'select count(1) as total_{tabela} from {tabela}'
 
-def clear_console(wait_time:int=1):
+def clear_console(wait_time:int=3):
    '''
       Esse método limpa a tela após alguns segundos
       wait_time: argumento de entrada que indica o tempo de espera
@@ -32,11 +32,14 @@ def clear_console(wait_time:int=1):
    import os
    from time import sleep
    import sys
-   sleep(wait_time)
+   #sleep(wait_time)
 
+   print("\n\n")
    print("==============================================================================")
    print("==============================================================================")
-   print("==============================================================================\n")
+   print("==============================================================================")
+   print("\n\n")
+
    return #desabilita o clear temporariamente para debugar
    if 'win32' in sys.platform:
       os.system("cls")

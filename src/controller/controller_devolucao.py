@@ -66,6 +66,9 @@ class Controller_Devolucao:
                 return None
 
             data_devolucao = input("Digite a nova Data da devolução (DD/MM/YYYY): ")
+            while not Controller_Emprestimo.valida_data_format(data_devolucao):
+                print("\nVocê tentou inserir um formato inválido, tente novamente.\n")
+                data_devolucao = input("Digite a nova Data da devolução (DD/MM/YYYY): ")
 
             devolucao_cadastrada = Devolucao(0, emprestimo, data_devolucao)
 
@@ -132,6 +135,9 @@ class Controller_Devolucao:
             return None
 
         data_devolucao = input("Data da devolução (DD/MM/YYYY): ")
+        while not Controller_Emprestimo.valida_data_format(data_devolucao):
+            print("\nVocê tentou inserir um formato inválido, tente novamente.\n")
+            data_devolucao = input("Data da devolução (DD/MM/YYYY): ")
 
         return Devolucao(0, emprestimo, data_devolucao)
 

@@ -104,7 +104,7 @@ class Controller_Emprestimo:
 
     def cadastrar_emprestimo(self, oracle) -> Emprestimo:
         #Solicita os dados de cadastro
-        print("Informe os dados solicitado para cadastrar o empréstimo.\n")
+        print("Informe os dados do empréstimo.\n")
 
         # Lista os usuarios existentes para inserir no item de emprestimo
         self.relatorio.get_relatorio_usuarios()
@@ -115,14 +115,21 @@ class Controller_Emprestimo:
 
         print("\n\n")
 
-        self.relatorio.get_relatorio_livros()
+        self.relatorio.get_relatorio_livros_disponiveis()
         codigo_livro = str(input("\nDigite o código do livro a ser emprestado: "))
-        livro = Controller_Livro.valida_livro(oracle, codigo_livro)
+        livro = Controller_Livro.valida_livro_disponivel(oracle, codigo_livro)
         if livro == None:
             return None
 
         data_emprestimo = input("Data de empréstimo (DD/MM/YYYY): ")
+        while not Controller_Emprestimo.valida_data_format(data_emprestimo):
+            print("\nVocê tentou inserir um formato inválido, tente novamente.\n")
+            data_emprestimo = input("Data de empréstimo (DD/MM/YYYY): ")
+
         data_devolucao = input("Data prevista de devolução (DD/MM/YYYY): ")
+        while not Controller_Emprestimo.valida_data_format(data_devolucao):
+            print("\nVocê tentou inserir um formato inválido, tente novamente.\n")
+            data_devolucao = input("Data prevista de devolução (DD/MM/YYYY): ")
 
         return Emprestimo(0, livro, usuario, data_emprestimo, data_devolucao)
 
@@ -148,3 +155,18 @@ class Controller_Emprestimo:
             return None
         else:
             return Controller_Emprestimo.get_emprestimo_from_dataframe(oracle, codigo_emprestimo)
+        
+    @staticmethod
+    def valida_data_format(data_string:str=None) -> bool:
+        try:
+            data_string = data_string.replace(" ", "")
+            data_array = data_string.split("/")
+            if len(data_array) != 3:
+                return False
+            dia_valido = len(data_array[0]) == 2 and int(data_array[0]) <= 31 and int(data_array[0]) >= 1
+            mes_valido = len(data_array[1]) == 2 and int(data_array[1]) <= 12 and int(data_array[1]) >= 1
+            ano_valido = len(data_array[2]) == 4 and int(data_array[2]) >= 1
+            valido = dia_valido and mes_valido and ano_valido
+            return valido
+        except:
+            return False
