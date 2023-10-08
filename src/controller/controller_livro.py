@@ -134,8 +134,8 @@ class Controller_Livro:
         
         livros_disponiveis_df = oracle.sqlToDataFrame(Relatorio().query_relatorio_livros_disponiveis)
 
-        if id_livro in livros_disponiveis_df.id_livro.values.tolist() == False and str(id_livro) in livros_disponiveis_df.id_livro.values.tolist() == False:
+        if not (int(id_livro) in livros_disponiveis_df.id_livro.values.tolist()):
             print(f"O livro de código {id_livro} não possui quantidade disponível.")
             return None
 
-        return Controller_Livro.get_livro_from_dataframe(oracle, id_livro) 
+        return Controller_Livro.get_livro_from_dataframe(oracle, id_livro)
