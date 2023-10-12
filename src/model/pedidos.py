@@ -1,43 +1,61 @@
 from datetime import date
 from model.clientes import Cliente
-from model.fornecedores import Fornecedor
+from model.veiculos import Veiculo
 
-class Pedido:
+class Pedidos:
     def __init__(self, 
-                 codigo_pedido:int=None,
-                 data_pedido:date=None,
-                 cliente:Cliente= None,
-                 fornecedor:Fornecedor=None
+                 idVenda:int=None,
+                 valorVenda:float=None,
+                 dataVenda:date=None,
+                 idVendedor:int=None,
+                 Cliente:str=None,
+                 Veiculo:str=None
                  ):
-        self.set_codigo_pedido(codigo_pedido)
-        self.set_data_pedido(data_pedido)
-        self.set_cliente(cliente)
-        self.set_fornecedor(fornecedor)
+        self.set_idVenda(idVenda)
+        self.set_valorVenda(valorVenda)
+        self.set_dataVenda(dataVenda)
+        self.set_idVendedor(idVendedor)
+        self.set_cliente(Cliente)
+        self.set_veiculos(Veiculo)
+#Getters
+    def get_idVenda(self) -> int:
+        return self.idVenda
 
+    def get_valorVenda(self) -> float:
+        return self.valorVenda
+    
+    def get_dataVenda(self) -> date:
+        return self.datavenda
 
-    def set_codigo_pedido(self, codigo_pedido:int):
-        self.codigo_pedido = codigo_pedido
-
-    def set_data_pedido(self, data_pedido:date):
-        self.data_pedido = data_pedido
-
-    def set_cliente(self, cliente:Cliente):
-        self.cliente = cliente
-
-    def set_fornecedor(self, fornecedor:Fornecedor):
-        self.fornecedor = fornecedor
-
-    def get_codigo_pedido(self) -> int:
-        return self.codigo_pedido
-
-    def get_data_pedido(self) -> date:
-        return self.data_pedido
+    def get_idVendedor(self) -> int:
+        return self.set_idVendedor
 
     def get_cliente(self) -> Cliente:
         return self.cliente
 
-    def get_fornecedor(self) -> Fornecedor:
-        return self.fornecedor
+    def get_veiculos(self) -> Veiculos:
+        return self.veiculos
 
+#Setters
+    def set_idVenda(self, idVenda: int):
+        self.idVenda = idVenda
+
+    def set_valorVenda(self, valorVenda: float):
+        self.valorVenda = valorVenda
+
+    def set_dataVenda(self, dataVenda: date):
+        self.datavenda(self, dataVenda)
+
+    def set_idVendedor(self, idVendedor: int):
+        self.idVendedor(self, idVendedor)
+
+    def set_cliente(self, cliente: Cliente):
+        self.cliente = cliente
+
+    def set_veiculos(self, veiculos: Veiculos):
+        self.veiculos = veiculos
+
+#ToString
     def to_string(self) -> str:
-        return f"Pedido: {self.get_codigo_pedido()} | Data: {self.get_data_pedido()} | Cliente: {self.get_cliente().get_nome()} | Fornecedor: {self.get_fornecedor().get_nome_fantasia()}"
+        return (f"Venda: {self.get_idVenda()} | Valor: {self.get_valorVenda()} | Data: {self.get_dataVenda()} |"
+        f" Vendedor: {self.get_idVendedor()} | Cliente: {self.get_cliente().get_cpfCliente()} | Veiculo: {self.get_veiculos().get_idVeiculos()}")

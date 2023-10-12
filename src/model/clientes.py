@@ -1,13 +1,13 @@
 class Cliente:
     def __init__(self,
-                 CPF:str=None,
+                 cpfCliente:str=None,
                  idCliente:str=None, 
                  nome:str=None,
                  email:str=None,
                  telefone:int=None,
                  endereco:str=None,
                 ):
-        self.set_CPF(CPF)
+        self.set_cpfCliente(cpfCliente)
         self.set_idCliente(idCliente)
         self.set_nome(nome)
         self.set_email(email)
@@ -15,8 +15,8 @@ class Cliente:
         self.set_endereco(endereco)
 
     #Getters  
-    def get_CPF(self) -> str:
-        return self.CPF
+    def get_cpfCliente(self) -> str:
+        return self.cpfCliente
     
     def get_idCliente(self) -> str:
         return self.idCliente
@@ -41,8 +41,8 @@ class Cliente:
     def set_nome(self, nome:str):
         self.nome = nome
 
-    def set_CPF(self, CPF:str):
-        self.CPF = CPF
+    def set_cpfCliente(self, cpfCliente:str):
+        self.cpf = cpfCliente
 
     def set_email(self, email:str):
         self.email = email
@@ -55,4 +55,4 @@ class Cliente:
 
 #ToString
     def to_string(self) -> str:
-        return f"CPF: {self.get_CPF()} | Nome: {self.get_nome()}| {self.get_email}| {self.get_endereco}|{self.get_telefone}"
+        return f"cpf: {self.get_cpfCliente()} | Nome: {self.get_nome()}| email: {self.get_email()}|  telefone: {self.get_telefone()}| endereco: {self.get_endereco()}"
