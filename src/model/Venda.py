@@ -2,7 +2,7 @@ from datetime import date
 from model.clientes import Cliente
 from model.veiculos import Veiculo
 
-class Pedidos:
+class VendaVeiculo:
     def __init__(self, 
                  idVenda:int=None,
                  valorVenda:float=None,
