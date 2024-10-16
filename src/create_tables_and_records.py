@@ -22,14 +22,18 @@ def generate_records(query:str, sep:str=';'):
     oracle.connect()
 
     for command in list_of_commands:    
-        if len(command) > 0:
-            print(command)
-            oracle.write(command)
-            print("Successfully executed")
+        if len(command.strip()) > 0:
+            print(f"Executing command: {command.strip()}")
+            try:
+                oracle.write(command.strip())  # Garantir que espaços em branco extras sejam removidos
+                print("Successfully executed")
+            except Exception as e:
+                print(f"Error executing command: {command.strip()}")
+                print(e)
 
 def run():
 
-    with open("../sql/create_tables_pedidos.sql") as f:
+    with open("../sql/create_tables_pontos.sql") as f:
         query_create = f.read()
 
     print("Creating tables...")
