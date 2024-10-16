@@ -35,8 +35,8 @@ class SplashScreen:
         #                   SISTEMA DE CONTROLE DE PONTO                    
         #                                                         
         #  TOTAL DE REGISTROS:                                    
-        #      1 - PONTOS:         {str(self.get_total_pontos()).rjust(5)}
-        #      2 - FUNCIONARIOS:         {str(self.get_total_funcionarios()).rjust(5)}
+        #      1 - PONTOS: {str(self.get_total_pontos())}
+        #      2 - FUNCIONARIOS: {str(self.get_total_funcionarios())}
         #
         #  CRIADO POR: {self.created_by}
         #

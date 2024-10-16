@@ -11,15 +11,17 @@ ctrl_ponto = Controller_Ponto()
 
 def reports(opcao_relatorio: int = 0):
     if opcao_relatorio == 1:
-        relatorio.get_relatorio_funcionarios()
+        relatorio.get_relatorio_pontos_funcionarios()
     elif opcao_relatorio == 2:
         relatorio.get_relatorio_pontos()
+    elif opcao_relatorio == 3:
+        relatorio.get_relatorio_funcionarios()
 
 def inserir(opcao_inserir: int = 0):
     if opcao_inserir == 1:
-        novo_funcionario = ctrl_funcionario.inserir_funcionario()
-    elif opcao_inserir == 2:
         novo_ponto = ctrl_ponto.inserir_ponto()
+    elif opcao_inserir == 2:
+        novo_funcionario = ctrl_funcionario.inserir_funcionario()
 
 def atualizar(opcao_atualizar: int = 0):
     if opcao_atualizar == 1:
@@ -48,7 +50,7 @@ def run():
 
         if opcao == 1:  # Relatórios
             print(config.MENU_RELATORIOS)
-            opcao_relatorio = int(input("Escolha uma opção [0-2]: "))
+            opcao_relatorio = int(input("Escolha uma opção [0-3]: "))
             config.clear_console(1)
 
             reports(opcao_relatorio)
