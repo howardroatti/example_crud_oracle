@@ -19,25 +19,25 @@ def reports(opcao_relatorio: int = 0):
 
 def inserir(opcao_inserir: int = 0):
     if opcao_inserir == 1:
-        novo_ponto = ctrl_ponto.inserir_ponto()
+        ctrl_ponto.inserir_ponto()
     elif opcao_inserir == 2:
-        novo_funcionario = ctrl_funcionario.inserir_funcionario()
+        ctrl_funcionario.inserir_funcionario()
 
 def atualizar(opcao_atualizar: int = 0):
     if opcao_atualizar == 1:
-        relatorio.get_relatorio_funcionarios()
-        funcionario_atualizado = ctrl_funcionario.atualizar_funcionario()
-    elif opcao_atualizar == 2:
         relatorio.get_relatorio_pontos()
-        ponto_atualizado = ctrl_ponto.atualizar_ponto()
+        ctrl_ponto.atualizar_ponto()
+    elif opcao_atualizar == 2:
+        relatorio.get_relatorio_funcionarios()
+        ctrl_funcionario.atualizar_funcionario()
 
 def excluir(opcao_excluir: int = 0):
     if opcao_excluir == 1:
-        relatorio.get_relatorio_funcionarios()
-        ctrl_funcionario.excluir_funcionario()
-    elif opcao_excluir == 2:
         relatorio.get_relatorio_pontos()
         ctrl_ponto.excluir_ponto()
+    elif opcao_excluir == 2:
+        relatorio.get_relatorio_funcionarios()
+        ctrl_funcionario.excluir_funcionario()
 
 def run():
     print(tela_inicial.get_updated_screen())
