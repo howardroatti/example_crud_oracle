@@ -13,7 +13,7 @@ MENU_RELATORIOS = """Relatórios
 0 - Sair
 """
 
-MENU_ENTIDADES = """Entidades
+MENU_ENTIDADES = """Opções:
 1 - PONTOS
 2 - FUNCIONARIOS
 """

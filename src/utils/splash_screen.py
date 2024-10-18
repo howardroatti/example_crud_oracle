@@ -9,7 +9,7 @@ class SplashScreen:
         self.created_by = "Pierry Jonny, Maria Eduarda, Matheus Castro, Kaylane Simões e Mylena Leite"
         self.professor = "Prof. M.Sc. Howard Roatti"
         self.disciplina = "Banco de Dados"
-        self.semestre = "2024/3"
+        self.semestre = "2024/2"
 
     def get_total_pontos(self):
         # Cria uma nova conexão com o banco que permite alteração

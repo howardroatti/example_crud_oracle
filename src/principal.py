@@ -16,12 +16,18 @@ def reports(opcao_relatorio: int = 0):
         relatorio.get_relatorio_pontos()
     elif opcao_relatorio == 3:
         relatorio.get_relatorio_funcionarios()
+    else:
+        print("Opção inválida. Por favor, insira uma opção disponível no menu")
+        
 
 def inserir(opcao_inserir: int = 0):
     if opcao_inserir == 1:
         ctrl_ponto.inserir_ponto()
     elif opcao_inserir == 2:
         ctrl_funcionario.inserir_funcionario()
+    else:
+        print("Opção inválida. Por favor, insira uma opção disponível no menu")
+        
 
 def atualizar(opcao_atualizar: int = 0):
     if opcao_atualizar == 1:
@@ -30,6 +36,8 @@ def atualizar(opcao_atualizar: int = 0):
     elif opcao_atualizar == 2:
         relatorio.get_relatorio_funcionarios()
         ctrl_funcionario.atualizar_funcionario()
+    else:
+        print("Opção inválida. Por favor, insira uma opção disponível no menu")
 
 def excluir(opcao_excluir: int = 0):
     if opcao_excluir == 1:
@@ -38,6 +46,9 @@ def excluir(opcao_excluir: int = 0):
     elif opcao_excluir == 2:
         relatorio.get_relatorio_funcionarios()
         ctrl_funcionario.excluir_funcionario()
+    else:
+        print("Opção inválida. Por favor, insira uma opção disponível no menu")
+        
 
 def run():
     print(tela_inicial.get_updated_screen())
@@ -62,9 +73,9 @@ def run():
             config.clear_console(1)
 
             inserir(opcao_inserir=opcao_inserir)
-            config.clear_console()
-            print(tela_inicial.get_updated_screen())
-            config.clear_console()
+            config.clear_console(1)
+            #print(tela_inicial.get_updated_screen())
+            #config.clear_console(1)
 
         elif opcao == 3:  # Atualizar Registros
             print(config.MENU_ENTIDADES)
@@ -82,7 +93,7 @@ def run():
             excluir(opcao_excluir=opcao_excluir)
             config.clear_console()
             print(tela_inicial.get_updated_screen())
-            config.clear_console()
+            config.clear_console(1)
 
         elif opcao == 5:
             print(tela_inicial.get_updated_screen())
@@ -92,7 +103,8 @@ def run():
 
         else:
             print("Opção incorreta.")
-            exit(1)
+            #exit(1)
+            config.clear_console(1)
 
 if __name__ == "__main__":
     run()
