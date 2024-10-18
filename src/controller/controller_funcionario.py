@@ -36,7 +36,7 @@ class Controller_Funcionario:
 
         codigo_funcionario = int(input("Código do Funcionário que irá alterar: "))
 
-        if not self.verifica_existencia_funcionario(oracle, codigo_funcionario):
+        if self.verifica_existencia_funcionario(oracle, codigo_funcionario):
             novo_nome = input("Novo Nome: ")
             novo_cargo = input("Novo Cargo: ")
 

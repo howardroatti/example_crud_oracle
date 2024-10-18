@@ -1,7 +1,10 @@
-SELECT p.codigo_ponto,
-       p.data_ponto,
-       p.hora_entrada,
-       p.hora_saida,
-       p.codigo_funcionario 
-FROM LABDATABASE.PONTOS p 
-ORDER BY p.data_ponto
+SELECT 
+  CODIGO_PONTO,
+  DATA_PONTO,
+  TO_CHAR(HORA_ENTRADA, 'HH24:MI') AS HORA_ENTRADA,
+  TO_CHAR(HORA_SAIDA, 'HH24:MI') AS HORA_SAIDA,
+  CODIGO_FUNCIONARIO
+FROM 
+  LABDATABASE.PONTOS
+ORDER BY
+  CODIGO_FUNCIONARIO, DATA_PONTO

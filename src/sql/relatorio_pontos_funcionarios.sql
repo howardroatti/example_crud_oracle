@@ -7,7 +7,7 @@ SELECT
         (TO_NUMBER(TO_CHAR(p.hora_saida, 'HH24')) * 60 + TO_NUMBER(TO_CHAR(p.hora_saida, 'MI')))
         - (TO_NUMBER(TO_CHAR(p.hora_entrada, 'HH24')) * 60 + TO_NUMBER(TO_CHAR(p.hora_entrada, 'MI')))
     ) / 60, 0), 1) AS horas_a_complementar
-FROM 
+FROM
     LABDATABASE.FUNCIONARIOS f
 LEFT JOIN 
     LABDATABASE.PONTOS p ON f.codigo_funcionario = p.codigo_funcionario
