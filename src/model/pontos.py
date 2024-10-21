@@ -36,7 +36,7 @@ class Ponto:
         self.__funcionario = funcionario
 
     def __str__(self):
-        # Convertendo os tipos numpy.datetime64 para datetime
+        
         data_formatada = pd.to_datetime(self.get_data_ponto()).strftime('%Y-%m-%d')
         hora_entrada_formatada = pd.to_datetime(self.get_hora_entrada()).strftime('%H:%M')
         hora_saida_formatada = pd.to_datetime(self.get_hora_saida()).strftime('%H:%M')

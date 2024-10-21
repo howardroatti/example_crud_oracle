@@ -65,7 +65,7 @@ def run():
             opcao = int(input("Escolha uma opção [1-5]: "))
             config.clear_console(1)
 
-            if opcao == 1:  # Relatórios
+            if opcao == 1:  
                 print(config.MENU_RELATORIOS)
                 try:
                     opcao_relatorio = int(input("Escolha uma opção [0-3]: "))
@@ -76,7 +76,7 @@ def run():
                     print("Entrada inválida. Por favor, insira um número inteiro.")
                     config.clear_console(1)
 
-            elif opcao == 2:  # Inserir Novos Registros
+            elif opcao == 2:  #
                 print(config.MENU_ENTIDADES)
                 try:
                     opcao_inserir = int(input("Escolha uma opção [0-2]: "))
@@ -87,7 +87,7 @@ def run():
                     print("Entrada inválida. Por favor, insira um número inteiro.")
                     config.clear_console(1)
 
-            elif opcao == 3:  # Atualizar Registros
+            elif opcao == 3:  
                 print(config.MENU_ENTIDADES)
                 try:
                     opcao_atualizar = int(input("Escolha uma opção [0-2]: "))
@@ -98,7 +98,7 @@ def run():
                     print("Entrada inválida. Por favor, insira um número inteiro.")
                     config.clear_console(1)
 
-            elif opcao == 4:  # Excluir Registros
+            elif opcao == 4:  
                 print(config.MENU_ENTIDADES)
                 try:
                     opcao_excluir = int(input("Escolha uma opção [0-2]: "))

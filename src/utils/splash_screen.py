@@ -12,17 +12,17 @@ class SplashScreen:
         self.semestre = "2024/3"
 
     def get_total_pontos(self):
-        # Cria uma nova conexão com o banco que permite alteração
+        
         oracle = OracleQueries()
         oracle.connect()
-        # Retorna o total de registros computado pela query
+        
         return oracle.sqlToDataFrame(self.qry_total_pontos)["total_pontos"].values[0]
 
     def get_total_funcionarios(self):
-        # Cria uma nova conexão com o banco que permite alteração
+        
         oracle = OracleQueries()
         oracle.connect()
-        # Retorna o total de registros computado pela query
+        
         return oracle.sqlToDataFrame(self.qry_total_funcionarios)["total_funcionarios"].values[0]
 
     def get_updated_screen(self):
