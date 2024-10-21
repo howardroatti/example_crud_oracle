@@ -13,9 +13,10 @@ MENU_RELATORIOS = """Relatórios
 0 - Sair
 """
 
-MENU_ENTIDADES = """Entidades
+MENU_ENTIDADES = """Opções:
 1 - PONTOS
 2 - FUNCIONARIOS
+0 - Sair
 """
 
 QUERY_COUNT = 'select count(1) as total_{tabela} from {tabela}'

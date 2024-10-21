@@ -12,7 +12,11 @@ class Controller_Ponto:
         oracle = OracleQueries()
         oracle.connect()
 
-        codigo_funcionario = int(input("Código do Funcionário: "))
+        try:
+            codigo_funcionario = int(input("Código do Funcionário: "))
+        except ValueError:
+            print("Entrada inválida. O código do funcionário deve ser um número inteiro.")
+            return None
         
         # Verifica se o funcionário existe
         if not self.ctrl_funcionario.verifica_existencia_funcionario(oracle, codigo_funcionario):
@@ -24,9 +28,19 @@ class Controller_Ponto:
         df_funcionario = oracle.sqlToDataFrame(query_nome_funcionario)
         nome_funcionario = df_funcionario['nome'].values[0]
 
-        data_ponto = input("Data (YYYY-MM-DD): ")
-        hora_entrada = input("Hora de Entrada (HH:MM): ")
-        hora_saida = input("Hora de Saída (HH:MM): ")
+        try:
+            data_ponto = input("Data (YYYY-MM-DD): ")
+            # Tenta converter a data para garantir que está correta
+            data_ponto = datetime.strptime(data_ponto, '%Y-%m-%d').date()
+
+            hora_entrada = input("Hora de Entrada (HH:MM): ")
+            hora_entrada = datetime.strptime(hora_entrada, '%H:%M').time()
+
+            hora_saida = input("Hora de Saída (HH:MM): ")
+            hora_saida = datetime.strptime(hora_saida, '%H:%M').time()
+        except ValueError:
+            print("Data ou hora inválida. Por favor, insira os dados no formato correto.")
+            return None
 
         cursor = oracle.connect()
         output_value = cursor.var(int)
@@ -58,18 +72,29 @@ class Controller_Ponto:
         print(novo_ponto)
         return novo_ponto
 
-
-
     def atualizar_ponto(self) -> Ponto:
         oracle = OracleQueries(can_write=True)
         oracle.connect()
 
-        codigo_ponto = int(input("Código do Ponto que irá alterar: "))
+        try:
+            codigo_ponto = int(input("Código do Ponto que irá alterar: "))
+        except ValueError:
+            print("Entrada inválida. O código do ponto deve ser um número inteiro.")
+            return None
 
         if not self.verifica_existencia_ponto(oracle, codigo_ponto):
-            nova_data = input("Nova Data (YYYY-MM-DD): ")
-            nova_hora_entrada = input("Nova Hora de Entrada (HH:MM): ")
-            nova_hora_saida = input("Nova Hora de Saída (HH:MM): ")
+            try:
+                nova_data = input("Nova Data (YYYY-MM-DD): ")
+                nova_data = datetime.strptime(nova_data, '%Y-%m-%d').date()
+
+                nova_hora_entrada = input("Nova Hora de Entrada (HH:MM): ")
+                nova_hora_entrada = datetime.strptime(nova_hora_entrada, '%H:%M').time()
+
+                nova_hora_saida = input("Nova Hora de Saída (HH:MM): ")
+                nova_hora_saida = datetime.strptime(nova_hora_saida, '%H:%M').time()
+            except ValueError:
+                print("Data ou hora inválida. Por favor, insira os dados no formato correto.")
+                return None
 
             oracle.write(f"""
                 update pontos 
@@ -105,7 +130,11 @@ class Controller_Ponto:
         oracle = OracleQueries(can_write=True)
         oracle.connect()
 
-        codigo_ponto = int(input("Código do Ponto que irá excluir: "))
+        try:
+            codigo_ponto = int(input("Código do Ponto que irá excluir: "))
+        except ValueError:
+            print("Entrada inválida. O código do ponto deve ser um número inteiro.")
+            return None
 
         if not self.verifica_existencia_ponto(oracle, codigo_ponto):
             oracle.write(f"delete from pontos where codigo_ponto = {codigo_ponto}")
@@ -116,4 +145,3 @@ class Controller_Ponto:
     def verifica_existencia_ponto(self, oracle: OracleQueries, codigo:int=None) -> bool:
         df_ponto = oracle.sqlToDataFrame(f"select codigo_ponto from pontos where codigo_ponto = {codigo}")
         return df_ponto.empty  # Retorna True se o ponto existir
-

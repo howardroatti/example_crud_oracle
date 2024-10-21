@@ -34,7 +34,11 @@ class Controller_Funcionario:
         oracle = OracleQueries(can_write=True)
         oracle.connect()
 
-        codigo_funcionario = int(input("Código do Funcionário que irá alterar: "))
+        try:
+            codigo_funcionario = int(input("Código do Funcionário que irá alterar: "))
+        except ValueError:
+            print("Entrada inválida. O código do funcionário deve ser um número inteiro.")
+            return None
 
         if self.verifica_existencia_funcionario(oracle, codigo_funcionario):
             novo_nome = input("Novo Nome: ")
@@ -54,7 +58,11 @@ class Controller_Funcionario:
         oracle = OracleQueries(can_write=True)
         oracle.connect()
 
-        codigo_funcionario = int(input("Código do Funcionário que irá excluir: "))
+        try:
+            codigo_funcionario = int(input("Código do Funcionário que irá excluir: "))
+        except ValueError:
+            print("Entrada inválida. O código do funcionário deve ser um número inteiro.")
+            return None
 
         if self.verifica_existencia_funcionario(oracle, codigo_funcionario):
             # Exclui todos os pontos relacionados ao funcionário antes de excluí-lo
@@ -64,7 +72,6 @@ class Controller_Funcionario:
             print(f"Funcionário e seus pontos relacionados foram removidos com sucesso!")
         else:
             print(f"O código {codigo_funcionario} não existe.")
-
 
     def verifica_existencia_funcionario(self, oracle: OracleQueries, codigo_funcionario: int) -> bool:
         query = f"SELECT codigo_funcionario FROM funcionarios WHERE codigo_funcionario = {codigo_funcionario}"
